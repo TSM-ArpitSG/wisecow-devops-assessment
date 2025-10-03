@@ -1,0 +1,31 @@
+# Kubernetes Ingress with TLS for Wisecow Application
+# Provides HTTPS access to the application
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wisecow-ingress
+  labels:
+    app: wisecow
+spec:
+  # Specify which ingress controller to use
+  ingressClassName: nginx
+  
+  # TLS configuration
+  tls:
+  - hosts:
+    - wisecow.local
+    secretName: wisecow-tls  # References the TLS secret we created
+  
+  # Routing rules
+  rules:
+  - host: wisecow.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wisecow-service
+            port:
+              number: 80

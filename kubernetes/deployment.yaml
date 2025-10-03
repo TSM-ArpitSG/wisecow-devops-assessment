@@ -1,0 +1,46 @@
+# Kubernetes Deployment for Wisecow Application
+# A Deployment manages a set of identical pods, ensuring they are running and healthy
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wisecow-deployment
+  labels:
+    app: wisecow
+spec:
+  # Number of pod replicas to run (3 pods for high availability)
+  replicas: 3
+  
+  # Selector tells the deployment which pods to manage
+  selector:
+    matchLabels:
+      app: wisecow
+  
+  # Template defines how to create each pod
+  template:
+    metadata:
+      labels:
+        app: wisecow
+    spec:
+      containers:
+      - name: wisecow
+        # Docker image to use (change this to your Docker Hub username/image)
+        image: wisecow-app:v1.0
+        
+        # Pull policy: IfNotPresent means use local image if available
+        # Change to "Always" when using Docker Hub
+        imagePullPolicy: IfNotPresent
+        
+        # Container port that the app listens on
+        ports:
+        - containerPort: 4499
+          name: http
+        
+        # Resource limits (optional but recommended)
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+          requests:
+            memory: "64Mi"
+            cpu: "50m"

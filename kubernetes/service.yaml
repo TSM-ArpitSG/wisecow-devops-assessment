@@ -1,0 +1,29 @@
+# Kubernetes Service for Wisecow Application
+# A Service exposes your application to network traffic
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: wisecow-service
+  labels:
+    app: wisecow
+spec:
+  # Type: NodePort exposes the service on each Node's IP at a static port
+  # You can access it via <NodeIP>:<NodePort>
+  # Other options: ClusterIP (internal only), LoadBalancer (cloud only)
+  type: NodePort
+  
+  # Selector: which pods should receive traffic from this service
+  selector:
+    app: wisecow
+  
+  # Ports configuration
+  ports:
+  - port: 80
+    # Target port is the container port (4499)
+    targetPort: 4499
+    # NodePort: external port (will be assigned automatically if not specified)
+    # Range: 30000-32767
+    nodePort: 30080
+    protocol: TCP
+    name: http

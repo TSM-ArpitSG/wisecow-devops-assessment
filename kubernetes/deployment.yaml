@@ -24,12 +24,11 @@ spec:
     spec:
       containers:
       - name: wisecow
-        # Docker image to use (change this to your Docker Hub username/image)
-        image: wisecow-app:v1.0
+        # Docker image from Docker Hub
+        image: arpitsh/wisecow:latest
         
-        # Pull policy: IfNotPresent means use local image if available
-        # Change to "Always" when using Docker Hub
-        imagePullPolicy: IfNotPresent
+        # Always pull the latest image from Docker Hub
+        imagePullPolicy: Always
         
         # Container port that the app listens on
         ports:

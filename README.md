@@ -1,14 +1,22 @@
 # Wisecow DevOps Assessment
 
-A containerized and Kubernetes-deployed application that serves random wisdom quotes with ASCII cow art.
+A comprehensive DevOps assessment repository demonstrating containerization, Kubernetes deployment, CI/CD automation, and system monitoring solutions.
 
 ## 🎯 Project Overview
 
-This project demonstrates:
+**Problem Statement 1 - Wisecow Application (✅ COMPLETE)**
 - **Docker containerization** of a bash-based web application
 - **Kubernetes deployment** with high availability (3 replicas)
 - **CI/CD automation** using GitHub Actions
 - **Container registry** integration with Docker Hub
+- **TLS/HTTPS security** using Kubernetes Ingress with self-signed certificates
+- **Auto-deployment** using Kind cluster in GitHub Actions
+
+**Problem Statement 2 - System Health Monitoring (🚧 In Progress)**
+- 2 scripts from 4 options (TBD)
+
+**Problem Statement 3 - Additional Solutions (🚧 Optional)**
+- To be determined
 
 ## 📁 Project Structure
 
@@ -21,7 +29,12 @@ wisecow-devops-assessment/
 │   └── Dockerfile              # Container image definition
 ├── kubernetes/
 │   ├── deployment.yaml         # Kubernetes deployment manifest
-│   └── service.yaml            # Kubernetes service manifest
+│   ├── service.yaml            # Kubernetes service manifest
+│   └── ingress.yaml            # Kubernetes ingress with TLS
+├── problem-2/
+│   └── README.md              # Problem Statement 2 (Scripts - TBD)
+├── problem-3/
+│   └── README.md              # Problem Statement 3 (Scripts - TBD)
 ├── wisecow-app/
 │   └── wisecow.sh             # Main application script
 └── README.md
@@ -34,6 +47,8 @@ wisecow-devops-assessment/
 - **Automated CI/CD**: Automatic Docker image builds on code push
 - **Service Exposure**: NodePort service on port 30080
 - **Resource Management**: CPU and memory limits configured
+- **TLS Security**: HTTPS support with self-signed certificates
+- **Auto-Deployment**: Automated deployment to Kind cluster via GitHub Actions
 
 ## 🛠️ Technologies Used
 
@@ -42,6 +57,8 @@ wisecow-devops-assessment/
 - **GitHub Actions**: CI/CD automation
 - **Docker Hub**: Container registry
 - **Bash**: Application scripting
+- **NGINX Ingress**: TLS/HTTPS termination
+- **Kind**: Kubernetes in Docker for CI/CD testing
 
 ## 📋 Prerequisites
 
@@ -95,6 +112,63 @@ kubectl port-forward service/wisecow-service 8080:80
 curl http://localhost:8080
 ```
 
+## 🔒 TLS/HTTPS Setup
+
+### Create Self-Signed Certificates
+
+```bash
+# Generate self-signed TLS certificate
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=wisecow.local/O=wisecow"
+
+# Create Kubernetes secret
+kubectl create secret tls wisecow-tls \
+  --cert=tls.crt \
+  --key=tls.key 
+  ``` 
+
+### Install NGINX Ingress Controller
+
+```bash
+# Install NGINX Ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+
+# Wait for ingress to be ready
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
+
+# Apply ingress manifest
+kubectl apply -f kubernetes/ingress.yaml
+```
+
+### Configure Local DNS
+```bash
+# Add to /etc/hosts
+echo "127.0.0.1 wisecow.local" | sudo tee -a /etc/hosts
+```
+
+### Access via HTTPS
+```bash
+# Test HTTPS access (use -k to ignore self-signed cert warning)
+curl -k https://wisecow.local
+
+# Or open in browser: https://wisecow.local (accept security warning)
+```
+
+### 🔒 Security Note
+
+**IMPORTANT:** The [tls.crt](cci:7://file:///Users/arpitsg/Desktop/Accuknox-DevOps-Trainee-Practical-Assessment_2025_Arpit/tls.crt:0:0-0:0) and [tls.key](cci:7://file:///Users/arpitsg/Desktop/Accuknox-DevOps-Trainee-Practical-Assessment_2025_Arpit/tls.key:0:0-0:0) files in this repository are **self-signed demo certificates** for local development and testing purposes only.
+
+⚠️ **In production:**
+- These files should **NOT** be committed to version control
+- Use proper CA-signed certificates from Let's Encrypt, DigiCert, etc.
+- Store certificates securely using Kubernetes Secrets or external secret managers (Vault, AWS Secrets Manager)
+- The included demo certificates are safe for this assessment environment only
+
+
 ## 🔄 CI/CD Pipeline
 
 The GitHub Actions workflow automatically:
@@ -103,6 +177,12 @@ The GitHub Actions workflow automatically:
 2. **Builds** Docker image
 3. **Pushes** to Docker Hub as `arpitsh/wisecow:latest`
 4. **Tags** with commit SHA for version tracking
+5. **Auto-deploys** to Kind Kubernetes cluster for testing
+
+### Pipeline Jobs
+
+- **Job 1: Build and Push** - Builds Docker image and pushes to registry
+- **Job 2: Deploy to Kubernetes** - Creates Kind cluster and deploys application
 
 ### Setup CI/CD
 
@@ -119,16 +199,27 @@ Image available at: [arpitsh/wisecow](https://hub.docker.com/r/arpitsh/wisecow)
 docker pull arpitsh/wisecow:latest
 ```
 
-## 🧪 Testing
+## ✅ Testing & Verification
 
-### Test Application Response
+### Test 1: Docker Build and Run
 
 ```bash
-# Should return a cow with a random quote
-curl http://localhost:30080
+# Build the image
+docker build -t wisecow-test:v1.0 -f docker/Dockerfile .
+
+# Run locally
+docker run -d -p 8080:4499 --name wisecow-test wisecow-test:v1.0
+
+# Test
+curl http://localhost:8080
+
+# Cleanup
+docker stop wisecow-test && docker rm wisecow-test
+
+Expected: ASCII cow with random quote
 ```
 
-### Verify Kubernetes Resources
+### Test 2: Kubernetes Deployment
 
 ```bash
 # Check deployment
@@ -142,7 +233,49 @@ kubectl get service wisecow-service
 
 # View logs
 kubectl logs -l app=wisecow
+
+Expected: 3 replicas running, service exposed on port 30080
 ```
+
+### Test 3: Service Accessibility
+
+```bash
+# Test via NodePort
+curl http://localhost:30080
+
+# Test via port-forward
+kubectl port-forward service/wisecow-service 8081:80
+curl http://localhost:8081
+
+Expected: Different quotes from load-balanced pods
+```
+
+### Test 4: TLS/HTTPS Verification
+
+```bash
+# Verify TLS secret
+kubectl get secret wisecow-tls
+
+# Check ingress
+kubectl get ingress wisecow-ingress
+
+# Test HTTPS
+curl -k https://wisecow.local
+
+# Check TLS version
+curl -kv https://wisecow.local 2>&1 | grep "SSL connection"
+
+Expected: HTTPS response with TLSv1.3 encryption
+```
+### Test 5: CI/CD Pipeline
+
+1. Push changes to `main` branch
+2. Check GitHub Actions: [https://github.com/TSM-ArpitSG/wisecow-devops-assessment/actions](https://github.com/TSM-ArpitSG/wisecow-devops-assessment/actions)
+3. Verify both jobs complete successfully:
+   - Build and Push Docker Image ✅
+   - Deploy to Kubernetes ✅
+
+**Expected:** All workflow steps green
 
 ## 📊 Resource Configuration
 
@@ -177,7 +310,8 @@ The Wisecow application:
 
 ## 📈 Future Enhancements
 
-- [ ] TLS/SSL implementation with Ingress
+- ✅ **TLS/SSL implementation** with Ingress (COMPLETED)
+- ✅ **Auto-deployment** with Kind cluster (COMPLETED)
 - [ ] Horizontal Pod Autoscaling (HPA)
 - [ ] Prometheus metrics integration
 - [ ] Health check endpoints

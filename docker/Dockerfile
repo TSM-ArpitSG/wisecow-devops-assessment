@@ -1,3 +1,13 @@
+# ============================================================================
+# Dockerfile for Wisecow Application
+# ============================================================================
+# Author: Arpit Singh
+# GitHub: @TSM-ArpitSG
+# Purpose: Containerize the Wisecow bash application that serves random 
+#          wisdom quotes with ASCII cow art via HTTP
+# Base Image: Debian Bullseye Slim (lightweight)
+# ============================================================================
+
 # Use Debian slim as the base image (lightweight but has all the packages we need)
 FROM debian:bullseye-slim
 

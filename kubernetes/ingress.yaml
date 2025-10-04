@@ -1,3 +1,14 @@
+# ============================================================================
+# Kubernetes Ingress Manifest for Wisecow Application (with TLS)
+# ============================================================================
+# Author: Arpit Singh
+# GitHub: @TSM-ArpitSG
+# Purpose: Enable HTTPS access to Wisecow application using TLS/SSL certificates
+#          Routes traffic from wisecow.local to the wisecow-service
+# Ingress Controller: NGINX
+# TLS: Self-signed certificate (wisecow-tls secret)
+# ============================================================================
+
 # Kubernetes Ingress with TLS for Wisecow Application
 # Provides HTTPS access to the application
 

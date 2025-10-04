@@ -1,3 +1,12 @@
+# ============================================================================
+# Kubernetes Deployment Manifest for Wisecow Application
+# ============================================================================
+# Author: Arpit Singh
+# GitHub: @TSM-ArpitSG
+# Purpose: Define deployment specification with 3 replicas for high availability
+#          Manages pod lifecycle, rolling updates, and resource allocation
+# ============================================================================
+
 # Kubernetes Deployment for Wisecow Application
 # A Deployment manages a set of identical pods, ensuring they are running and healthy
 

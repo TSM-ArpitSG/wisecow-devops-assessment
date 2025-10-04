@@ -1,3 +1,14 @@
+# ============================================================================
+# GitHub Actions CI/CD Workflow for Wisecow Application
+# ============================================================================
+# Author: Arpit Singh
+# GitHub: @TSM-ArpitSG
+# Purpose: Automate Docker image build, push to Docker Hub, and deployment
+#          to Kubernetes Kind cluster for testing
+# Triggers: On push to main branch
+# Jobs: 1) Build & Push Docker Image  2) Deploy to Kind Kubernetes Cluster
+# ============================================================================
+
 # GitHub Actions Workflow for Wisecow CI/CD
 # This workflow automatically builds and pushes Docker image when code is pushed
 

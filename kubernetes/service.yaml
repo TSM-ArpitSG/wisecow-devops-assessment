@@ -1,3 +1,13 @@
+# ============================================================================
+# Kubernetes Service Manifest for Wisecow Application
+# ============================================================================
+# Author: Arpit Singh
+# GitHub: @TSM-ArpitSG
+# Purpose: Expose the Wisecow deployment via NodePort service on port 30080
+#          Provides load balancing across 3 pod replicas
+# Service Type: NodePort (accessible via <NodeIP>:30080)
+# ============================================================================
+
 # Kubernetes Service for Wisecow Application
 # A Service exposes your application to network traffic
 

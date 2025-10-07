@@ -1,0 +1,19 @@
+[2025-10-07 12:43:07] [INFO] Starting system health monitoring...
+[2025-10-07 12:43:08] [INFO] CPU Usage: 9.4%
+[2025-10-07 12:43:08] [INFO] Memory Usage: 78.3% (Used: 5.20GB / Total: 16.00GB)
+[2025-10-07 12:43:08] [INFO] Disk Usage: 16.4% (Used: 13.72GB / Total: 228.27GB)
+[2025-10-07 12:43:08] [INFO] Total Running Processes: 634
+[2025-10-07 12:43:08] [INFO] Top 5 CPU-consuming processes:
+[2025-10-07 12:43:08] [ALERT] ERROR: unsupported format string passed to NoneType.__format__
+[2025-10-07 13:00:55] [INFO] Starting system health monitoring...
+[2025-10-07 13:00:56] [INFO] CPU Usage: 19.1%
+[2025-10-07 13:00:56] [INFO] Memory Usage: 72.1% (Used: 6.15GB / Total: 16.00GB)
+[2025-10-07 13:00:56] [INFO] Disk Usage: 16.4% (Used: 13.72GB / Total: 228.27GB)
+[2025-10-07 13:00:56] [INFO] Total Running Processes: 581
+[2025-10-07 13:00:56] [INFO] Top 5 CPU-consuming processes:
+[2025-10-07 13:00:56] [INFO]   1. PID: 0, Name: kernel_task, CPU: 0.0%, Memory: 0.0%
+[2025-10-07 13:00:56] [INFO]   2. PID: 1, Name: launchd, CPU: 0.0%, Memory: 0.0%
+[2025-10-07 13:00:56] [INFO]   3. PID: 307, Name: logd, CPU: 0.0%, Memory: 0.0%
+[2025-10-07 13:00:56] [INFO]   4. PID: 309, Name: UserEventAgent, CPU: 0.0%, Memory: 0.0%
+[2025-10-07 13:00:56] [INFO]   5. PID: 311, Name: fseventsd, CPU: 0.0%, Memory: 0.0%
+[2025-10-07 13:00:56] [SUCCESS] System health monitoring completed.

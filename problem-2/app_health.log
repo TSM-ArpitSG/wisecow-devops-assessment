@@ -1,0 +1,6 @@
+[2025-10-07 12:44:11] [INFO] Checking application: Google
+[2025-10-07 12:44:11] [INFO] URL: https://google.com
+[2025-10-07 12:44:12] [SUCCESS] HTTP Status Code: 200 (OK)
+[2025-10-07 12:44:12] [SUCCESS] Status: UP ✓
+[2025-10-07 12:44:12] [SUCCESS] Application 'Google' is functioning correctly
+[2025-10-07 12:44:12] [INFO] Health check completed with exit code: 0

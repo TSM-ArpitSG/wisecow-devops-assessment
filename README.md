@@ -12,11 +12,13 @@ A comprehensive DevOps assessment repository demonstrating containerization, Kub
 - **TLS/HTTPS security** using Kubernetes Ingress with self-signed certificates
 - **Auto-deployment** using Kind cluster in GitHub Actions
 
-**Problem Statement 2 - System Health Monitoring (🚧 In Progress)**
-- 2 scripts from 4 options (TBD)
+**Problem Statement 2 - System Health Monitoring (✅ COMPLETE)**
+- **System Health Monitor** (Python) - CPU, memory, disk, process monitoring with alerts
+- **Application Health Checker** (Bash) - HTTP status code monitoring for uptime checks
+- Both scripts tested and fully functional with comprehensive documentation
 
 **Problem Statement 3 - Additional Solutions (🚧 Optional)**
-- To be determined
+- KubeArmor zero-trust policy implementation (extra points)
 
 ## 📁 Project Structure
 
@@ -32,9 +34,13 @@ wisecow-devops-assessment/
 │   ├── service.yaml            # Kubernetes service manifest
 │   └── ingress.yaml            # Kubernetes ingress with TLS
 ├── problem-2/
-│   └── README.md              # Problem Statement 2 (Scripts - TBD)
+│   ├── README.md               # Problem Statement 2 documentation
+│   ├── system_health_monitor.py # Python system health monitoring script
+│   ├── app_health_checker.sh   # Bash application health checker script
+│   ├── system_health.log       # System monitoring logs
+│   └── app_health.log          # Application health check logs
 ├── problem-3/
-│   └── README.md              # Problem Statement 3 (Scripts - TBD)
+│   └── README.md                 # Problem Statement 3 (Scripts - TBD)
 ├── wisecow-app/
 │   └── wisecow.sh             # Main application script
 └── README.md

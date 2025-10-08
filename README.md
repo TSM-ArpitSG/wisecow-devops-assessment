@@ -17,8 +17,11 @@ A comprehensive DevOps assessment repository demonstrating containerization, Kub
 - **Application Health Checker** (Bash) - HTTP status code monitoring for uptime checks
 - Both scripts tested and fully functional with comprehensive documentation
 
-**Problem Statement 3 - Additional Solutions (🚧 Optional)**
-- KubeArmor zero-trust policy implementation (extra points)
+**Problem Statement 3 - KubeArmor Zero-Trust Policy (✅ COMPLETE - Optional)**
+- **Zero-trust security policies** using KubeArmor for Wisecow workload
+- Policy enforcement in audit mode with monitoring
+- Blocks sensitive file access and process execution from /tmp
+- All 3 pods monitored with comprehensive security coverage
 
 ## 📁 Project Structure
 

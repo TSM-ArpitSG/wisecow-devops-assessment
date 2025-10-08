@@ -64,6 +64,20 @@ Our KubeArmor policy implements two security layers for the Wisecow application:
 - **Blocks writes to `/etc/` (configuration integrity)
 - **Audits all file modification attempts
 
+## 📸 Implementation Screenshots
+
+### KubeArmor Policies Applied
+![KubeArmor Probe Output](kubearmor-probe-output.png)
+
+**What this shows:**
+- ✅ All 3 Wisecow pods are "Armored Up"
+- ✅ Both policies applied to each pod
+- ✅ Audit mode active for File, Capabilities, Network
+- ✅ KubeArmor successfully monitoring the workload
+
+### Policy Verification
+![Policy List](kubearmor-policies-list.png)
+
 ## Installation & Deployment
 
 ### Prerequisites

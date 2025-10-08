@@ -26,7 +26,8 @@ KubeArmor is a Cloud Native Runtime Security (CNRS) platform that provides zero-
 problem-3/
 ├── README.md                        # This documentation
 ├── wisecow-kubearmor-policy.yaml   # KubeArmor security policies
-└── policy-violation-screenshot.png  # Screenshot of policy violations (TBD)
+├── kubearmor-probe-output.png      # Policy monitoring screenshot
+└── kubearmor-policies-list.png     # Policy verification screenshot
 ```
 
 ## Zero-Trust Policy Overview
@@ -37,16 +38,8 @@ Our KubeArmor policy implements two security layers for the Wisecow application:
 **Severity:** 8/10 (High)
 
 **Restrictions:**
-- **Process Execution:**
-  - Blocks execution from `/tmp/` and `/var/tmp/` (common attack vectors)
-  - Allows only required binaries: `wisecow.sh`, `bash`, `fortune`, `cowsay`, `nc`
-  - Prevents unauthorized process spawning
-
-- **File Access:**
-  - Blocks access to `/etc/shadow`, `/etc/passwd` (credentials)
-  - Blocks SSH keys in `/root/.ssh/` and `/home/*/.ssh/`
-  - Prevents writes to system directories (`/bin/`, `/sbin/`, `/usr/bin/`)
-  - Blocks modifications to `/proc/sys/` (kernel parameters)
+- Blocks writes to system directories: [/bin/](cci:7://file:///bin:0:0-0:0), [/sbin/](cci:7://file:///sbin:0:0-0:0), [/usr/bin/](cci:7://file:///usr/bin:0:0-0:0), [/usr/sbin/](cci:7://file:///usr/sbin:0:0-0:0)
+- Prevents system file tampering and backdoor installation
 
 - **Network:**
   - Restricts network connections
@@ -138,7 +131,7 @@ kubectl get pods -l app=wisecow
 kubectl apply -f wisecow-kubearmor-policy.yaml
 
 # Verify policies are created
-kubectl get kubearmor policies
+kubectl get kubearmorpolicies
 
 # Expected output:
 # NAME                             AGE
@@ -150,7 +143,7 @@ kubectl get kubearmor policies
 
 ```bash
 # Describe the policy
-kubectl describe kubearmor policy wisecow-zero-trust-policy
+kubectl describe kubearmorpolicy wisecow-zero-trust-policy
 
 # Check policy logs
 karmor logs
@@ -278,11 +271,11 @@ helm uninstall kubearmor -n kubearmor
 karmor uninstall
 ```
 
-## Submission Checklist
+## ✅ Submission Checklist
 
 - [x] Created comprehensive KubeArmor policy YAML
-- [ ] Installed KubeArmor on Kubernetes cluster
-- [ ] Applied policy to cluster
-- [ ] Tested policy violations
-- [ ] Captured screenshot of violations
-- [ ] Committed policy YAML and screenshot to repo
+- [x] Installed KubeArmor on Kubernetes cluster
+- [x] Applied policy to cluster
+- [x] Tested policy violations
+- [x] Captured screenshots of policy monitoring
+- [x] Committed policy YAML and screenshots to repo

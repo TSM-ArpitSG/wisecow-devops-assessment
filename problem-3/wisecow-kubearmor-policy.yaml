@@ -1,0 +1,79 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: wisecow-zero-trust-policy
+  namespace: default
+spec:
+  # Severity level (1-10, 10 being most critical)
+  severity: 8
+  
+  # Custom message for policy violations
+  message: "Wisecow Zero-Trust Policy Violation Detected"
+  
+  # Tags for categorization
+  tags:
+    - SECURITY
+    - ZERO-TRUST
+    - WISECOW
+  
+  # Selector to match Wisecow pods
+  selector:
+    matchLabels:
+      app: wisecow
+  
+  # Process execution restrictions
+  process:
+    # Block execution from dangerous directories
+    matchDirectories:
+      # Block all executables in /tmp (common attack vector)
+      - dir: /tmp/
+        recursive: true
+      
+      # Block executables in /var/tmp
+      - dir: /var/tmp/
+        recursive: true
+  
+  # File access restrictions
+  file:
+    # Block access to sensitive system files
+    matchPaths:
+      # Block access to sensitive credentials
+      - path: /etc/shadow
+      - path: /etc/passwd
+      - path: /etc/group
+  
+  # Default action for anything not explicitly allowed
+  action: Block
+
+---
+# Additional policy for monitoring file writes
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: wisecow-file-integrity-policy
+  namespace: default
+spec:
+  severity: 7
+  message: "Wisecow File Integrity Violation"
+  tags:
+    - FILE-INTEGRITY
+    - WISECOW
+  
+  selector:
+    matchLabels:
+      app: wisecow
+  
+  file:
+    # Block writes to system directories
+    matchDirectories:
+      # Block writes to /bin, /sbin, /usr/bin, /usr/sbin
+      - dir: /bin/
+        recursive: false
+      - dir: /sbin/
+        recursive: false
+      - dir: /usr/bin/
+        recursive: false
+      - dir: /usr/sbin/
+        recursive: false
+  
+  action: Block

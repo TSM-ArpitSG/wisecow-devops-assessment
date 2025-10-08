@@ -43,7 +43,10 @@ wisecow-devops-assessment/
 │   ├── system_health.log       # System monitoring logs
 │   └── app_health.log          # Application health check logs
 ├── problem-3/
-│   └── README.md                 # Problem Statement 3 (Scripts - TBD)
+│   ├── README.md                   # Problem Statement 3 documentation
+│   ├── wisecow-kubearmor-policy.yaml # KubeArmor zero-trust policies
+│   ├── kubearmor-probe-output.png  # Policy monitoring screenshot
+│   └── kubearmor-policies-list.png # Policy verification screenshot
 ├── wisecow-app/
 │   └── wisecow.sh             # Main application script
 └── README.md
@@ -325,7 +328,7 @@ The Wisecow application:
 - [ ] Prometheus metrics integration
 - [ ] Health check endpoints
 - [ ] Helm chart for deployment
-- [ ] KubeArmor security policies
+- ✅ **KubeArmor security policies** (COMPLETED)
 
 ## 👨‍💻 Author
 

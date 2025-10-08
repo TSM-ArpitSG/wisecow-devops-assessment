@@ -14,9 +14,11 @@ This section contains 2 scripts implementing different monitoring and health che
 
 ## Structure
 problem-2/
-├── README.md
-├── script1.py (or .sh)
-└── script2.py (or .sh)
+├── README.md                    # This documentation
+├── system_health_monitor.py     # Python system health monitoring script
+├── app_health_checker.sh        # Bash application health checker script
+├── system_health.log           # Log file (generated on first run)
+└── app_health.log              # Log file (generated on first run)
 
 ---
 
